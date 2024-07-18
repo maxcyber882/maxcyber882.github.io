@@ -1,6 +1,6 @@
-const text = "Maxcyber";
+const text = "maxcyber";
 let index = 0;
-const speed = 150; // Speed of typing
+const speed = 170; // Speed of typing
 const cursor = '<span class="cursor">|</span>';
 
 function typeWriter() {
