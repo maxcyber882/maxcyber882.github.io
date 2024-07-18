@@ -1,0 +1,51 @@
+body {
+    background-color: black;
+    color: #eeeeee;
+    font-family:'Courier New', Courier, monospace ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.terminal {
+    background-color: black;
+    margin-top: 20px;
+}
+
+#output {
+    font-size: 3em;
+    
+}
+
+.cursor {
+    display: inline-block;
+    background-color: #e1e7e1;
+    width: 10px;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { background-color: transparent; }
+    50% { background-color: #cbd1cb; }
+}
+
+nav {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+nav a {
+    color: #f8f8f8;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.5em;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
