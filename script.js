@@ -5,7 +5,7 @@ const cursor = '<span class="cursor">|</span>';
 
 function typeWriter() {
     if (index < text.length) {
-        document.getElementById("output").innerHTML = '<span id="prompt">$ </span>' + text.substring(0, index + 1) + cursor;
+        document.getElementById("output").innerHTML = '<span id="prompt">root@maxcyber:#_ </span>' + text.substring(0, index + 1) + cursor;
         index++;
         setTimeout(typeWriter, speed);
     } else {
