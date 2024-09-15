@@ -1,0 +1,68 @@
+body {
+    background-color: black;
+    color: #eeeeee;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+}
+
+nav {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+
+nav a {
+    color: #f8f8f8;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.5em;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.max{
+    
+   padding-top: 0%;
+    
+}
+
+.hack{
+    margin: 0%;
+    padding-left: 5%;
+}
+
+p{
+    font: size 15px;;
+}
+
+.passion{
+    
+    padding-left: 5%;
+}
+
+.pop{
+    padding: 5%;
+}
+
+#xman{
+    
+    padding-top: 39%;
+}
+.mayank{
+     padding-left: 5%;
+}
+
+h2{
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
