@@ -1,4 +1,4 @@
-const text = "maxcyber";
+const text = "Max Cyber";
 let index = 0;
 const speed = 170; // Speed of typing
 const cursor = '<span class="cursor">|</span>';
