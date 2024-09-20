@@ -4,25 +4,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maxcyber</title>
+    <title>Responsive Navbar</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <img src="https://wallpapercave.com/wp/wp2077751.jpg" height="260px" width="460px">
-
-    <div class="terminal">
-        <p id="output"><span id="prompt">$ </span></p>
-    </div>
-    <script src="script.js"></script>
-    <nav>
-        <a href="about.html">About</a>  <a href="contact.html">Contact</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
+        <a class="navbar-brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                fill="currentColor" class="bi bi-terminal-fill" viewBox="0 0 16 16">
+                <path
+                    d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm9.5 5.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1m-6.354-.354a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 1 0-.708.708L4.793 6.5z" />
+            </svg></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="blog.html">Blog</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link " href="contact.html" tabindex="-1" aria-disabled="true">Contact</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <canvas id="matrix"></canvas>
-    
 
-    
+    <div class="wrapper">
+        <div class="typing-demo">
+            <h1>~$ Max Cyber</h1>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
