@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Scheduling: The Brain Behind Multitasking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .code-block {
+            background-color: #060b11;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            color: #e9ecef;
+        }
+        .diagram {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            background-color: #060b11;
+            color: #e7f5ff;
+        }
+        .note-box {
+            background-color: #e7f5ff;
+            border-left: 4px solid #4dabf7;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3bf;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #e9ecef;
+        }
+        .architecture-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        .component-card {
+            transition: transform 0.3s;
+            margin-bottom: 15px;
+        }
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .algorithm-viz {
+            background: #010203;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            color: #e7f5ff;
+
+        }
+        .gantt-chart {
+            display: flex;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .gantt-block {
+            padding: 10px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <article>
+                    <header class="mb-5">
+                        <h1 class="fw-bold mb-3">CPU Scheduling: The Brain Behind Multitasking</h1>
+                        <p class="text-muted">Published on <time datetime="2023-09-09">September 09, 2025</time> by Max Cyber</p>
+                    </header>
+
+                    <div class="mb-5">
+                        <div class="code-block">
+// CPU Scheduler Components
++---------------------+-----------------------------+
+|      Component      |          Function          |
++---------------------+-----------------------------+
+| Dispatcher          | Context switching          |
+| Scheduling Algorithm| Decision making            |
+| Ready Queue         | Processes ready to execute |
+| Scheduler Activation| Event triggering           |
++---------------------+-----------------------------+
+                        </div>
+                        <p class="text-muted mt-2 text-center"><small>Key components of CPU Scheduling</small></p>
+                    </div>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">What is CPU Scheduling?</h2>
+                        <p>CPU scheduling is a fundamental operating system function that determines which process runs when multiple processes are competing for CPU time. It's the core mechanism that enables multitasking on computer systems.</p>
+                        
+                        <p>This system is critical because:</p>
+                        <ul>
+                            <li>It maximizes CPU utilization by ensuring the CPU always has work to do</li>
+                            <li>It provides the illusion of parallel execution on single-core systems</li>
+                            <li>It ensures fair allocation of CPU time among processes</li>
+                            <li>It enables responsive interactive systems</li>
+                        </ul>
+                        
+                        <div class="note-box">
+                            <strong>Note:</strong> The CPU scheduler is part of the operating system kernel and operates primarily in kernel mode.
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Scheduling Concepts and Terminology</h2>
+                        
+                        <h3 class="h5 mt-4">Process States</h3>
+                        <p>Processes transition between different states during their lifetime:</p>
+                        
+                        <div class="code-block">
+// Process State Transitions
++---------+    +---------+    +---------+
+|  New    | -> | Ready   | <->| Running |
++---------+    +---------+    +---------+
+                      |           |
+                      |           v
+                      |       +---------+
+                      +-----> | Waiting |
+                              +---------+
+                                  |
+                                  v
+                              +---------+
+                              | Terminated |
+                              +---------+
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Scheduling Terminology</h3>
+                        
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Term</th>
+                                <th>Definition</th>
+                                <th>Importance</th>
+                            </tr>
+                            <tr>
+                                <td>Arrival Time</td>
+                                <td>Time when process enters ready queue</td>
+                                <td>Determines when process becomes eligible for execution</td>
+                            </tr>
+                            <tr>
+                                <td>Burst Time</td>
+                                <td>CPU time required by process</td>
+                                <td>Key factor in scheduling decisions</td>
+                            </tr>
+                            <tr>
+                                <td>Completion Time</td>
+                                <td>Time when process finishes execution</td>
+                                <td>Used to calculate turnaround time</td>
+                            </tr>
+                            <tr>
+                                <td>Turnaround Time</td>
+                                <td>Total time from arrival to completion</td>
+                                <td>Measures overall process performance</td>
+                            </tr>
+                            <tr>
+                                <td>Waiting Time</td>
+                                <td>Total time spent waiting in ready queue</td>
+                                <td>Measures scheduling efficiency</td>
+                            </tr>
+                            <tr>
+                                <td>Response Time</td>
+                                <td>Time from submission to first response</td>
+                                <td>Critical for interactive systems</td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Scheduling Algorithms</h2>
+                        
+                        <h3 class="h5 mt-4">First-Come, First-Served (FCFS)</h3>
+                        <p>The simplest scheduling algorithm that executes processes in the order they arrive:</p>
+                        
+                        <div class="algorithm-viz">
+// FCFS Example
+Processes: P1 (Burst: 10ms), P2 (Burst: 5ms), P3 (Burst: 8ms)
+
+Execution order: P1 -> P2 -> P3
+
+Gantt Chart:
++----------+----------+----------+
+|    P1    |    P2    |    P3    |
++----------+----------+----------+
+0          10         15         23
+
+Waiting times: P1=0, P2=10, P3=15
+Average waiting time: (0+10+15)/3 = 8.33ms
+                        </div>
+                        
+                        <div class="warning-box">
+                            <strong>Convoy Effect:</strong> FCFS can suffer from the convoy effect where short processes wait behind long processes, leading to poor performance.
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Shortest Job First (SJF)</h3>
+                        <p>Executes processes with the smallest burst time first:</p>
+                        
+                        <div class="algorithm-viz">
+// SJF Example (Non-preemptive)
+Processes: P1 (Burst: 10ms), P2 (Burst: 5ms), P3 (Burst: 8ms)
+
+Execution order: P2 -> P3 -> P1
+
+Gantt Chart:
++----------+----------+----------+
+|    P2    |    P3    |    P1    |
++----------+----------+----------+
+0          5          13         23
+
+Waiting times: P1=13, P2=0, P3=5
+Average waiting time: (13+0+5)/3 = 6ms
+                        </div>
+                        
+                        <div class="note-box">
+                            <strong>Note:</strong> SJF is optimal for minimizing average waiting time but requires knowing burst times in advance, which is often not possible.
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Round Robin (RR)</h3>
+                        <p>Each process gets a small unit of CPU time (time quantum), then moves to the back of the queue:</p>
+                        
+                        <div class="algorithm-viz">
+// Round Robin Example (Time Quantum = 4ms)
+Processes: P1 (Burst: 10ms), P2 (Burst: 5ms), P3 (Burst: 8ms)
+
+Execution order: P1, P2, P3, P1, P3, P1, P3
+
+Gantt Chart:
++------+------+------+------+------+------+------+
+| P1(4)| P2(4)| P3(4)| P1(4)| P3(4)| P1(2)| P3(0)|
++------+------+------+------+------+------+------+
+0      4      8      12     16     20     22     22
+
+Waiting times: P1=(0+8)=8, P2=4, P3=(4+8)=12
+Average waiting time: (8+4+12)/3 = 8ms
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Priority Scheduling</h3>
+                        <p>Processes are executed based on priority, with higher priority processes running first:</p>
+                        
+                        <div class="algorithm-viz">
+// Priority Scheduling Example
+Processes: P1 (Burst: 10ms, Priority: 3), 
+           P2 (Burst: 5ms, Priority: 1), 
+           P3 (Burst: 8ms, Priority: 2)
+
+Execution order: P2 (Highest priority) -> P3 -> P1
+
+Gantt Chart:
++----------+----------+----------+
+|    P2    |    P3    |    P1    |
++----------+----------+----------+
+0          5          13         23
+
+Waiting times: P1=13, P2=0, P3=5
+Average waiting time: (13+0+5)/3 = 6ms
+                        </div>
+                        
+                        <div class="warning-box">
+                            <strong>Starvation:</strong> Priority scheduling can lead to starvation where low-priority processes never get CPU time. This is often addressed with aging (gradually increasing priority of waiting processes).
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Multi-Level Queue Scheduling</h2>
+                        <p>Real operating systems often use complex multi-level approaches:</p>
+                        
+                        <div class="code-block">
+// Windows Scheduling Architecture
++---------------------+-------------------+---------------------+
+|     Real-time       |    Variable       |      Normal         |
+|      Priority       |     Priority      |      Priority       |
+|     (31-16)         |     (15-8)        |      (7-0)          |
++---------------------+-------------------+---------------------+
+| Time-critical       | High              | Above normal        |
+| systems processes   | priority          | Interactive         |
+|                     | applications      | applications        |
+|                     |                   |                     |
+| Fixed quantums      | Dynamic priority  | Dynamic priority    |
+| No priority boost   | adjustment        | adjustment with     |
+|                     |                   | foreground boost    |
++---------------------+-------------------+---------------------+
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Multi-Level Feedback Queue (MLFQ)</h3>
+                        <p>MLFQ uses multiple queues with different priorities and time quantums:</p>
+                        
+                        <div class="code-block">
+// MLFQ Rules
+1. If Priority(A) > Priority(B), A runs
+2. If Priority(A) = Priority(B), A & B run in RR
+3. New job enters highest priority queue
+4. If job uses entire quantum, priority is reduced
+5. If job yields before quantum expires, priority remains
+6. After some time period, boost all jobs to highest priority
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Linux CPU Scheduling</h2>
+                        <p>Linux uses a completely fair scheduler (CFS) designed for fairness and interactivity:</p>
+                        
+                        <div class="code-block">
+// Completely Fair Scheduler (CFS)
+Key concepts:
+- Virtual runtime (vruntime): Measures how much CPU time a process has received
+- Red-black tree: Efficient data structure to find process with smallest vruntime
+- Target latency: Maximum time before all runnable tasks will run at least once
+- Minimum granularity: Minimum time a task will run before being preempted
+
+Scheduling classes:
+- SCHED_NORMAL: Default time-sharing scheduling
+- SCHED_FIFO: Real-time first-in-first-out
+- SCHED_RR: Real-time round-robin
+- SCHED_BATCH: For batch processes
+- SCHED_IDLE: For very low priority tasks
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Scheduling in Multi-Processor Systems</h2>
+                        <p>Multi-core and multi-processor systems present additional scheduling challenges:</p>
+                        
+                        <h3 class="h5 mt-4">Symmetric Multiprocessing (SMP)</h3>
+                        <p>In SMP systems, each processor runs its own scheduler but shares a common runqueue or has individual runqueues with work stealing.</p>
+                        
+                        <div class="code-block">
+// SMP Scheduling Approaches
+1. Common runqueue: 
+   - Simple implementation
+   - Can become a bottleneck
+   - Good load balancing
+
+2. Per-CPU runqueues:
+   - Better scalability
+   - Requires load balancing
+   - Work stealing when CPU is idle
+
+3. Hybrid approaches:
+   - Combination of common and per-CPU queues
+   - Used in modern operating systems
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Load Balancing</h3>
+                        <p>Load balancing ensures work is distributed evenly across processors:</p>
+                        
+                        <div class="code-block">
+// Load Balancing Techniques
+- Push migration: Special task moves processes from overloaded to underloaded CPUs
+- Pull migration: Idle processors take processes from busy processors
+- Periodic balancing: Regular checks to redistribute work
+- Domain-based balancing: Consider CPU affinity and cache locality
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Real-Time Scheduling</h2>
+                        <p>Real-time systems have strict timing constraints that require special scheduling approaches:</p>
+                        
+                        <h3 class="h5 mt-4">Rate-Monotonic Scheduling (RMS)</h3>
+                        <p>For periodic tasks with fixed priorities based on period length:</p>
+                        
+                        <div class="code-block">
+// Rate-Monotonic Scheduling
+- Shorter period = higher priority
+- Optimal fixed-priority scheduling for periodic tasks
+- Utilization bound: Σ(Ci/Ti) ≤ n(2^(1/n) - 1)
+  where n = number of tasks, Ci = computation time, Ti = period
+                        </div>
+                        
+                        <h3 class="h5 mt-4">Earliest Deadline First (EDF)</h3>
+                        <p>Dynamic priority scheduling based on deadlines:</p>
+                        
+                        <div class="code-block">
+// Earliest Deadline First
+- Task with earliest deadline has highest priority
+- Dynamic priorities change as deadlines approach
+- Optimal dynamic-priority scheduling
+- Can achieve 100% utilization
+                        </div>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Scheduling Evaluation Metrics</h2>
+                        <p>Different scheduling algorithms are evaluated using various metrics:</p>
+                        
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Metric</th>
+                                <th>Definition</th>
+                                <th>Ideal Value</th>
+                            </tr>
+                            <tr>
+                                <td>CPU Utilization</td>
+                                <td>Percentage of time CPU is busy</td>
+                                <td>Maximize (close to 100%)</td>
+                            </tr>
+                            <tr>
+                                <td>Throughput</td>
+                                <td>Number of processes completed per time unit</td>
+                                <td>Maximize</td>
+                            </tr>
+                            <tr>
+                                <td>Turnaround Time</td>
+                                <td>Time from submission to completion</td>
+                                <td>Minimize</td>
+                            </tr>
+                            <tr>
+                                <td>Waiting Time</td>
+                                <td>Time spent waiting in ready queue</td>
+                                <td>Minimize</td>
+                            </tr>
+                            <tr>
+                                <td>Response Time</td>
+                                <td>Time from submission to first response</td>
+                                <td>Minimize</td>
+                            </tr>
+                            <tr>
+                                <td>Fairness</td>
+                                <td>Equitable allocation of CPU time</td>
+                                <td>Maximize</td>
+                            </tr>
+                        </table>
+                    </section>
+
+                    <section class="mb-5">
+                        <h2 class="h4 fw-bold mb-3">Conclusion</h2>
+                        <p>CPU scheduling is a critical operating system function that balances competing goals of efficiency, fairness, and responsiveness. From simple algorithms like FCFS to complex systems like Linux's CFS, scheduling approaches have evolved to handle diverse workloads and hardware configurations.</p>
+                        
+                        <p>Understanding CPU scheduling is essential for:</p>
+                        <ul>
+                            <li>System administrators optimizing performance</li>
+                            <li>Developers writing efficient applications</li>
+                            <li>Computer scientists studying operating systems</li>
+                            <li>Anyone interested in how computers manage multiple tasks</li>
+                        </ul>
+                        
+                        <p>As computing continues to evolve with more cores, heterogeneous processors, and new workloads, CPU scheduling will remain a vibrant area of research and development.</p>
+                    </section>
+
+                    <footer class="mt-5 pt-4 border-top">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="text-muted">Category: <a href="#" class="text-decoration-none">Windows Internals</a></span>
+                            </div>
+                           <!-- <div>
+                                <a href="#" class="text-decoration-none me-3">Share</a>
+                                <a href="#" class="text-decoration-none">Tweet</a>
+                            </div>-->
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
